@@ -1,34 +1,44 @@
 #include "main.h"
 
 /**
- * append_text_to_file - app. at ends_files created.
- * @filename: po. to name_file will be created.
- * @text_content: po. to str will be added to flie_end.
+ * append_text_to_file - Appends text to the end of a file.
  *
- * Return: If func fails or filename is NULL_-1.
- * If a  file doesnt exist user cant write permissions_ -1.
- * Otherwise_1.
+ * @filename: The name of the file to which to append text.
+ * @text_content: The NULL-terminated string to add at the end of the file.
+ *
+ * Return: 1 on success, -1 on failure.
+ *         Does not create the file if it does not exist.
+ *         If @filename is NULL, returns -1.
+ *         If @text_content is NULL, does not add anything to the file.
+ *         Returns 1 if the file exists and -1 if it does not exist or if
+ *         you do not have the required permissions to write the file.
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int len = 0;
-	int o, w;
+	int fd;
+	int nletters;
+	int rwr;
 
-	if (filename == NULL)
+	if (!filename)
 		return (-1);
 
-	if (text_content != NULL)
+	fd = open(filename, O_WRONLY | O_APPEND);
+
+	if (fd == -1)
+		return (-1);
+
+	if (text_content)
 	{
-		for (len = 0; text_content[len];)
-			len++;
+		for (nletters = 0; text_content[nletters]; nletters++)
+			;
+
+		rwr = write(fd, text_content, nletters);
+
+		if (rwr == -1)
+			return (-1);
 	}
 
-	o = open(filename, O_WRONLY | O_APPEND);
-	w = write(o, text_content, len);
+	close(fd);
 
-	if (o == -1 || w == -1)
-		return (-1);
-
-	close(o);
 	return (1);
 }
