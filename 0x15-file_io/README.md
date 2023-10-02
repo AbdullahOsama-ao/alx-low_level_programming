@@ -1,5 +1,4 @@
 Files Manipulating Wiht C Language 
-
 Functions to :
 . Write in a file
 . read from a file
