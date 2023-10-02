@@ -1,9 +1,8 @@
-Files Manipulating Wiht C Language 
-
-Functions to :
-. Write in a file
-. read from a file
-. write and read at the same time
+0x15-file i/o
+Manipulating files with c language
+functions :
+. read
+. write
 . append
-. change
-. etc .....
+. read / write
+. etc... 
